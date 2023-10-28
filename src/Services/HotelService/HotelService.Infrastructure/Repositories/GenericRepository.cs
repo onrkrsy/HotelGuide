@@ -1,5 +1,4 @@
-﻿using HotelService.Infrastructure.Repositories.Abstract;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +6,9 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HotelService.Infrastructure.Repositories.Concrete
+namespace HotelService.Infrastructure.Repositories
 {
-    public class GenericRepository <TEntity> : IGenericRepository<TEntity>
+    public class GenericRepository<TEntity> : IGenericRepository<TEntity>
         where TEntity : class
     {
         private readonly DbContext _dbContext;

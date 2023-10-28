@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HotelService.Infrastructure.Repositories.Abstract
+namespace HotelService.Infrastructure.Repositories
 {
     public interface IGenericRepository<T> where T : class
     {
