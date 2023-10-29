@@ -1,10 +1,6 @@
-using MassTransit;
-using RabbitMQ.Client;
-using RabbitMQ.Client.Events;
+using ReportService.Infrastructure;
 using ReportService.Infrastructure.Consumer;
-using System.Text;
 using ServiceCore.Extensions;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,15 +12,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddMassTransitConsumerExtension<CreateReportConsumer>(builder.Configuration);
 
-
-
-
-
-
+builder.Services.AddInfrastructureServices(builder.Configuration); 
 
 var app = builder.Build();
-
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

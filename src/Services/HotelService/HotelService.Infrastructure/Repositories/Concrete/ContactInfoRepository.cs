@@ -1,7 +1,7 @@
 ﻿using HotelService.Domain.Entities;
 using HotelService.Infrastructure.Context;
 using HotelService.Infrastructure.Repositories.Abstract;
-using Microsoft.EntityFrameworkCore;
+using ServiceCore.Repositories;
 
 namespace HotelService.Infrastructure.Repositories.Concrete
 {

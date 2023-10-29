@@ -1,13 +1,7 @@
-﻿using HotelService.Infrastructure.Repositories;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using ServiceCore.Models.Abstract;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using ServiceCore.Repositories;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace HotelService.Application.Services
 {
     public class GenericBusiness<TEntity> : IGenericBusiness<TEntity> where TEntity : class, IEntity

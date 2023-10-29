@@ -4,7 +4,7 @@
     {
         public enum ContactType
         {
-            PhoneNumber ,
+            PhoneNumber,
             EmailAddress,
             Location
         }
