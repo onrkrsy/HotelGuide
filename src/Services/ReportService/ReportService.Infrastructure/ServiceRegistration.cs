@@ -16,7 +16,8 @@ namespace ReportService.Infrastructure
                 options.UseNpgsql(configuration?.GetConnectionString("PgSQL"));
                 options.EnableSensitiveDataLogging();
             });
-            serviceCollection.AddScoped<IReportRepository, ReportRepository>(); 
+            serviceCollection.AddScoped<IReportRepository, ReportRepository>();
+
         }
 
     }

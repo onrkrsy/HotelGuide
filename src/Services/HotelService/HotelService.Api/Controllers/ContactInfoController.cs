@@ -4,6 +4,7 @@ using HotelService.Application.Services.Abstract;
 using HotelService.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using HotelService.Application.Models;
 
 namespace ContactInfoService.Api.Controllers
 {
@@ -38,17 +39,17 @@ namespace ContactInfoService.Api.Controllers
 
 
         [HttpPost]
-        public IActionResult CreateContactInfo([FromBody] ContactInfo ContactInfo)
+        public IActionResult CreateContactInfo([FromBody] CreateContactInfoDto contactInfo)
         {
-            _contactInfoService.Add(ContactInfo);
-            return CreatedAtAction(nameof(GetContactInfo), new { id = ContactInfo.Id }, ContactInfo);
+            _contactInfoService.Add(contactInfo);
+            return CreatedAtAction(nameof(GetContactInfo), new { id = contactInfo.HotelId }, contactInfo);
         }
 
 
         [HttpPut]
-        public IActionResult UpdateContactInfo([FromBody] ContactInfo ContactInfo)
+        public IActionResult UpdateContactInfo([FromBody] UpdateContactInfoDto contactInfo)
         {
-            _contactInfoService.Update(ContactInfo);
+            _contactInfoService.Update(contactInfo);
             return NoContent();
         }
 

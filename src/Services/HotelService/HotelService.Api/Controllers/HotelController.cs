@@ -1,4 +1,5 @@
-﻿using HotelService.Application.Services.Abstract;
+﻿using HotelService.Application.Models;
+using HotelService.Application.Services.Abstract;
 using HotelService.Domain.Entities;
 using HotelService.Infrastructure.Repositories.Abstract;
 using Microsoft.AspNetCore.Http;
@@ -19,14 +20,15 @@ namespace HotelService.Api.Controllers
 
        
         [HttpGet]
-        public IActionResult ListHotels()
+        [HttpGet("ListHotels")]
+        public async Task<IActionResult> ListHotels()
         {
-            var hotels = _hotelService.GetAll();
+            var hotels = await _hotelService.GetAll();
             return Ok(hotels);
         }
 
    
-        [HttpGet("{id}")]
+        [HttpGet("Get/{id}")]
         public IActionResult GetHotel(Guid id)
         {
             var hotel = _hotelService.Get(id);
@@ -38,23 +40,24 @@ namespace HotelService.Api.Controllers
         }
 
       
-        [HttpPost]
-        public IActionResult CreateHotel([FromBody] Hotel hotel)
+        [HttpPost("CreateHotel")]
+
+        public IActionResult CreateHotel([FromBody] CreateHotelDto hotel)
         {
             _hotelService.Add(hotel);
-            return CreatedAtAction(nameof(GetHotel), new { id = hotel.Id }, hotel);
+            return CreatedAtAction(nameof(GetHotel), new { Name = hotel.Name }, hotel);
         }
 
      
-        [HttpPut]
-        public IActionResult UpdateHotel([FromBody] Hotel hotel)
+        [HttpPut("UpdateHotel")]
+        public IActionResult UpdateHotel([FromBody] UpdateHotelDto hotel)
         {   
             _hotelService.Update(hotel);
             return NoContent();
         }
 
     
-        [HttpDelete("{id}")]
+        [HttpDelete("RemoveHotel/{id}")]
         public IActionResult RemoveHotel(Guid id)
         {
             var hotel = _hotelService.Get(id);

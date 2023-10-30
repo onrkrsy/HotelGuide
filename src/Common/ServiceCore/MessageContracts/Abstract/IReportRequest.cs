@@ -7,7 +7,11 @@ using System.Threading.Tasks;
 namespace ServiceCore.MessageContracts.Abstract
 {
     public interface  IReportRequest
-    { 
-        string Data { get; } 
+    {
+        public string Data { get; set; }
+    }
+    public class ReportRequest: IReportRequest
+    {
+        public string Data { get; set; }
     }
 }

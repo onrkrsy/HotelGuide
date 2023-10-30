@@ -1,4 +1,5 @@
 ﻿using MassTransit;
+using MassTransit.RabbitMqTransport;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -16,20 +17,38 @@ namespace ServiceCore.Extensions
          where TConsumer : class, IConsumer
         {
             services.AddMassTransit(x =>
-            {
+            { 
+
+
+                
                 x.AddConsumer<TConsumer>();
                 x.SetKebabCaseEndpointNameFormatter();
                 x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
                 {
                     cfg.Host(configuration.GetConnectionString("RabbitMq"));
                     cfg.UseDelayedMessageScheduler();
-                    cfg.ReceiveEndpoint(typeof(TConsumer).Name, ep =>
+                    cfg.ReceiveEndpoint("report-queue", ep =>
                     {
                         ep.PrefetchCount = 1;
                         ep.UseMessageRetry(r => r.Interval(5, 1000));
                         ep.ConfigureConsumer<TConsumer>(provider);
                     });
                 }));
+            });
+        }
+        public static void AddMassTransitHostExtension(this IServiceCollection services, IConfiguration configuration)    
+        {
+            services.AddMassTransit(x =>
+            { 
+                x.SetKebabCaseEndpointNameFormatter();
+                x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
+                {
+                    cfg.Host(configuration.GetConnectionString("RabbitMq"));
+                    cfg.UseDelayedMessageScheduler(); 
+                }));
+                
+
+
             });
         }
     }
