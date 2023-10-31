@@ -10,7 +10,7 @@ namespace HotelService.Infrastructure
     public  static class ServiceRegistration
     {
         public static void AddInfrastructureServices(this IServiceCollection serviceCollection, IConfiguration configuration = null)
-        {
+        { 
             serviceCollection.AddDbContext<HotelGuideDbContext>(options =>
             {
                 options.UseNpgsql(configuration?.GetConnectionString("PgSQL"));

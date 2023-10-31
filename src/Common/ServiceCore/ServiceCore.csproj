@@ -9,6 +9,7 @@
   <ItemGroup>
     <Folder Include="Enums\" />
     <Folder Include="Constants\" />
+    <Folder Include="Repositories\EntityFramework\" />
 	  <PackageReference Include="MassTransit" Version="8.0.10-develop.696" />
 	  <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.10-develop.696" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.13" />

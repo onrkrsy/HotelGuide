@@ -8,10 +8,10 @@ namespace ServiceCore.MessageContracts.Abstract
 {
     public interface  IReportRequest
     {
-        public string Data { get; set; }
+        public string Location { get; set; }
     }
     public class ReportRequest: IReportRequest
     {
-        public string Data { get; set; }
+        public string Location { get; set; }
     }
 }

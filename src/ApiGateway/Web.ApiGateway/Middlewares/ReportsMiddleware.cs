@@ -1,5 +1,6 @@
 ﻿using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using Ocelot.Infrastructure;
 using ServiceCore.Extensions;
 using ServiceCore.MessageContracts.Abstract;
@@ -28,10 +29,13 @@ namespace Web.ApiGateway.Handlers
             var _publishEndpoint = publishEndpoint;
             var request = context.Request;
             var body = await new StreamReader(request.Body).ReadToEndAsync();
-            //var message = new ReportRequest() { Data = body };
-            await _bus.Send<IReportRequest>(new { Data = body }); 
+            await _bus.Send<IReportRequest>(JsonConvert.DeserializeObject<ReportRequest>(body));
+            string responseString = "Rapor oluşturma talebi alınmıştır. ListAllReportStatus enpointinden raporun durumu takip edebilirsiniz.";             
+            context.Response.ContentType = "text/plain"; 
+            context.Response.StatusCode = 200; 
+            await context.Response.WriteAsync(responseString);
         }
-        
+
     }
   
 }

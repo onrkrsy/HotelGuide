@@ -27,9 +27,15 @@ namespace HotelService.Api.Controllers
             return Ok(hotels);
         }
 
-   
+        [HttpGet("GetReportDatasByLocation/{location}")]
+        public async Task<IActionResult> GetReportDatasByLocation(string location)
+        {
+            var hotels = await _hotelService.GetReportDatasByLocation(location);
+            return Ok(hotels);
+        }
+
         [HttpGet("Get/{id}")]
-        public IActionResult GetHotel(Guid id)
+        public async Task<IActionResult>  GetHotel(Guid id)
         {
             var hotel = _hotelService.Get(id);
             if (hotel == null)
@@ -42,15 +48,18 @@ namespace HotelService.Api.Controllers
       
         [HttpPost("CreateHotel")]
 
-        public IActionResult CreateHotel([FromBody] CreateHotelDto hotel)
+        public async Task<IActionResult> CreateHotel([FromBody] CreateHotelDto hotel)
         {
-            _hotelService.Add(hotel);
-            return CreatedAtAction(nameof(GetHotel), new { Name = hotel.Name }, hotel);
+            if(await _hotelService.Add(hotel) != null)
+            {
+                return Ok("Hotel Added");
+            }
+            return BadRequest(); 
         }
 
      
         [HttpPut("UpdateHotel")]
-        public IActionResult UpdateHotel([FromBody] UpdateHotelDto hotel)
+        public async Task<IActionResult>  UpdateHotel([FromBody] UpdateHotelDto hotel)
         {   
             _hotelService.Update(hotel);
             return NoContent();
@@ -58,7 +67,7 @@ namespace HotelService.Api.Controllers
 
     
         [HttpDelete("RemoveHotel/{id}")]
-        public IActionResult RemoveHotel(Guid id)
+        public async Task<IActionResult>  RemoveHotel(Guid id)
         {
             var hotel = _hotelService.Get(id);
             if (hotel == null)

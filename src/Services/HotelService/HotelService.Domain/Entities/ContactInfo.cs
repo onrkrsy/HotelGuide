@@ -1,4 +1,5 @@
-﻿using HotelService.Domain.Enums;
+﻿ 
+using HotelService.Domain.Enums;
 using ServiceCore.Models.Abstract;
 using System.ComponentModel.DataAnnotations;
 using static HotelService.Domain.Enums.ContactInfoType;

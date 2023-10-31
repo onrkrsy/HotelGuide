@@ -23,21 +23,30 @@ namespace ServiceCore.Repositories
             return await _dbContext.Set<TEntity>().ToListAsync();
         }
 
-        public virtual async Task<TEntity> Get(Guid id)
+        public  async Task<TEntity> Get(Guid id)
         {
             return await _dbContext.Set<TEntity>().FindAsync(id);
         }
 
-        public virtual async Task<TEntity> Create(TEntity entity)
+        public  async Task<TEntity> Create(TEntity entity)
         {
-            var x = _dbContext.Set<TEntity>().Add(entity);
-            await _dbContext.SaveChangesAsync();
+            _dbContext.Set<TEntity>().Add(entity); 
+            await _dbContext.SaveChangesAsync();  
             return entity;
         }
 
         public virtual async Task<TEntity> Update(TEntity entity)
         {
-            _dbContext.Set<TEntity>().Update(entity);
+            try
+            {
+                _dbContext.Set<TEntity>().Update(entity);
+            }
+            catch (Exception ext)
+            {
+
+                throw;
+            }
+          
             await _dbContext.SaveChangesAsync();
             return entity;
         }

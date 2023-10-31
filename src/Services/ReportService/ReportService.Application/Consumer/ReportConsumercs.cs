@@ -18,14 +18,14 @@ namespace ReportService.Application
     {
         private readonly IReportBusiness _reportService;
 
-        public ReportConsumer()
+        public ReportConsumer(IReportBusiness reportService)
         {
-            _reportService = new ReportBusiness() ;
+            _reportService = reportService;
         }
         public async Task Consume(ConsumeContext<IReportRequest> context)
         { 
-            await _reportService.Add(new Models.CreateReportDto() { Location = context.Message.Data });
-            await Console.Out.WriteLineAsync($"Rapor Oluşturma İsteği Alındı_ {context.Message.Data}");
+            await _reportService.Add(new Models.CreateReportDto() { Location = context.Message.Location });
+            await Console.Out.WriteLineAsync($"Rapor Oluşturma İsteği Alındı_ {context.Message.Location}");
         }
     }
 }

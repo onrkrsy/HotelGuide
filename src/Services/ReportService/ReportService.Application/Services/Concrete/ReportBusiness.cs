@@ -23,7 +23,7 @@ namespace ReportService.Application.Services.Concrete
             _mapper = mapper;
             _repository = repository;
         }
-        public ReportBusiness() { }
+     
         public async Task<Report> Add(CreateReportDto model)
         {
 
@@ -31,13 +31,14 @@ namespace ReportService.Application.Services.Concrete
             {
                 Id = Guid.NewGuid(),
                 Location = model.Location,
-                RequestedAt = DateTime.Now,
+                RequestedAt = DateTime.Now.ToUniversalTime(),
                 Status = Domain.Enums.ReportStatus.InProgress,
                 TotalHotels = 0,
                 TotalPhoneNumbers = 0
             };   
             await _repository.Create(report);
-            CreateReport(report);
+
+            await CreateReport(report);
             return report;
         }
 
@@ -66,7 +67,7 @@ namespace ReportService.Application.Services.Concrete
 
         public async Task CreateReport(Report _report)
         {
-            var hotelApi = "http://localhost:7501/getAll";
+            var hotelApi = $"http://localhost:7501/api/Hotel/GetReportDatasByLocation/{_report.Location}";
 
             using (HttpClient client = new HttpClient())
             {
@@ -77,10 +78,13 @@ namespace ReportService.Application.Services.Concrete
                     if (response.IsSuccessStatusCode)
                     {
                         string json = await response.Content.ReadAsStringAsync();
-                        var data = JsonConvert.DeserializeObject<StatisticsHotelDto>(json); 
-                        WriteToTxt(data); // gelen pathi database'e yaz
+                        var data = JsonConvert.DeserializeObject<List<StatisticsHotelDto>>(json).FirstOrDefault(); 
+
+                        WriteToTxt(data,_report.Id.ToString()); // gelen pathi database'e yaz
                         _report.Status = ReportStatus.Completed;
-                        Update(_report);                        
+                        _report.TotalHotels = data.HotelCount;
+                        _report.TotalPhoneNumbers = data.ConnectionCount;
+                        await Update(_report);                        
                     }
                     else
                     {
@@ -93,9 +97,9 @@ namespace ReportService.Application.Services.Concrete
                 }
             }  
         }
-        private string  WriteToTxt(StatisticsHotelDto data)
+        private string  WriteToTxt(StatisticsHotelDto data, string reportId)
         {
-            string fileName = $"report-{data.Id}.txt"; // Dosya adı
+            string fileName = $"report-{reportId}.txt"; // Dosya adı
             string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
             using (StreamWriter writer = new StreamWriter(filePath))
             {

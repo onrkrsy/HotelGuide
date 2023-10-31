@@ -12,7 +12,7 @@ namespace HotelService.Domain.Entities
         public string HotelName { get; set; }
         public string AuthorizedFirstName { get; set; }
         public string AuthorizedLastName { get; set; }
-   
+        public string Location { get; set; }
         public  List<ContactInfo> ContactInfos { get; set; }
     }
 }

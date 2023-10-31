@@ -1,10 +1,6 @@
 using MassTransit;
-using ServiceCore.Extensions;
-using ServiceCore.MessageContracts;
-using ReportService.Infrastructure;
 using ReportService.Application;
-using ReportService.Application.Services.Concrete;
-using static MassTransit.Logging.OperationName;
+using ReportService.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,16 +11,37 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddInfrastructureServices(builder.Configuration);
+builder.Services.AddApplicationServices(builder.Configuration);
+builder.Services.AddAutoMapper(typeof(Program));
 
-var bus = BusConfigurator.ConfigureBus(builder.Configuration,configuration =>
-{ 
-    configuration.ReceiveEndpoint(builder.Configuration["RabbitMQ:QueueName"].ToString(), e =>
+builder.Services.AddMassTransit(x =>
+{
+     
+    x.AddConsumer<ReportConsumer>();
+
+    x.UsingRabbitMq((context, cfg) =>
     {
-        e.Consumer<ReportConsumer>();
+        cfg.ReceiveEndpoint(builder.Configuration["RabbitMQ:QueueName"], e =>
+        {
+            e.ConfigureConsumer<ReportConsumer>(context);
+        });
     });
 });
 
-await bus.StartAsync(); 
+builder.Services.AddScoped<ReportConsumer>();
+
+
+//var bus = BusConfigurator.ConfigureBus(builder.Configuration, configuration =>
+//{
+//    configuration.ReceiveEndpoint(builder.Configuration["RabbitMQ:QueueName"].ToString(), e =>
+//    {
+//        e.Consumer<ReportConsumer>();
+//    });
+//});
+//await bus.StartAsync();
+
+
+
 var app = builder.Build(); 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

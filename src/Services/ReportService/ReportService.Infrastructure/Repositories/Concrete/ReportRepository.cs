@@ -9,10 +9,10 @@ namespace ReportService.Infrastructure.Repositories.Concrete
 {
     public class ReportRepository : GenericRepository<Report>, IReportRepository
     {
-        private HotelGuideReportsDbContext context;
+        private HotelGuideReportsDbContext _context;
         public ReportRepository(HotelGuideReportsDbContext context) : base(context)
         {
-            this.context = context;
+            _context = context;
         }  
     }
 }

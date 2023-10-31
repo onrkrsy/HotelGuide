@@ -1,6 +1,7 @@
 ﻿using HotelService.Application.Models;
 using HotelService.Domain.Entities;
 using ServiceCore.Models.Abstract;
+using ServiceCore.Models.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,8 @@ namespace HotelService.Application.Services.Abstract
         Task<List<Hotel>> GetAll();
         Task<Hotel>Get(Guid id);
         Task Delete(Guid id);
+        Task<List<StatisticsHotelDto>> GetReportDatasByLocation(string location);
+
 
     }
 }

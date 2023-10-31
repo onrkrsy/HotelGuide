@@ -19,17 +19,18 @@ namespace ContactInfoService.Api.Controllers
             _contactInfoService = contactInfoRepository;
         }
         [HttpGet]
-        public IActionResult ListContactInfos()
+        public async Task<IActionResult> ListContactInfos()
         {
-            var ContactInfos = _contactInfoService.GetAll();
+
+            var ContactInfos = await _contactInfoService.GetAll();
             return Ok(ContactInfos);
         }
 
 
         [HttpGet("{id}")]
-        public IActionResult GetContactInfo(Guid id)
+        public async Task<IActionResult> GetContactInfo(Guid id)
         {
-            var ContactInfo = _contactInfoService.Get(id);
+            var ContactInfo = await _contactInfoService.Get(id);
             if (ContactInfo == null)
             {
                 return NotFound();
@@ -39,25 +40,25 @@ namespace ContactInfoService.Api.Controllers
 
 
         [HttpPost]
-        public IActionResult CreateContactInfo([FromBody] CreateContactInfoDto contactInfo)
+        public async Task<IActionResult> CreateContactInfo([FromBody] CreateContactInfoDto contactInfo)
         {
-            _contactInfoService.Add(contactInfo);
+             await _contactInfoService.Add(contactInfo);
             return CreatedAtAction(nameof(GetContactInfo), new { id = contactInfo.HotelId }, contactInfo);
         }
 
 
         [HttpPut]
-        public IActionResult UpdateContactInfo([FromBody] UpdateContactInfoDto contactInfo)
+        public async Task<IActionResult> UpdateContactInfo([FromBody] UpdateContactInfoDto contactInfo)
         {
-            _contactInfoService.Update(contactInfo);
+            await _contactInfoService.Update(contactInfo);
             return NoContent();
         }
 
 
         [HttpDelete("{id}")]
-        public IActionResult RemoveContactInfo(Guid id)
+        public async Task<IActionResult> RemoveContactInfo(Guid id)
         {
-            var ContactInfo = _contactInfoService.Get(id);
+            var ContactInfo = await _contactInfoService.Get(id);
             if (ContactInfo == null)
             {
                 return NotFound();

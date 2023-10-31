@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using ReportService.Infrastructure.Context;
 using ReportService.Infrastructure.Repositories.Abstract;
 using ReportService.Infrastructure.Repositories.Concrete;
+using ServiceCore.Repositories;
 
 namespace ReportService.Infrastructure
 {
@@ -17,7 +18,7 @@ namespace ReportService.Infrastructure
                 options.EnableSensitiveDataLogging();
             });
             serviceCollection.AddScoped<IReportRepository, ReportRepository>();
-
+       
         }
 
     }

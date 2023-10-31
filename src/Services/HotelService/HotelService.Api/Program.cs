@@ -1,4 +1,3 @@
-using AutoMapper;
 using HotelService.Application;
 using HotelService.Infrastructure;
 using HotelService.Infrastructure.Context;
@@ -9,8 +8,15 @@ using Microsoft.Extensions.DependencyInjection;
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllers();
-builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddApplicationServices(builder.Configuration);
+builder.Services.AddInfrastructureServices(builder.Configuration);
+
+//builder.Services.AddDbContext<HotelGuideDbContext>(options =>
+//{
+//    var constr = builder.Configuration?.GetConnectionString("PgSQL");
+//    options.UseNpgsql(constr);
+//    options.EnableSensitiveDataLogging();
+//});
 builder.Services.AddAutoMapper(typeof(Program));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
