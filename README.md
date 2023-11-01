@@ -1,30 +1,35 @@
 # HotelGuide
 
-HotelGuide, oteller ve onlara ait iletişim bilgilerini kaydetmek ve belirli konumlar için özel raporlar oluşturmak için tasarlanmış bir projedir.
+HotelGuide, oteller ve onlara ait iletiÅŸim bilgilerini kaydetmek ve belirli konumlar iÃ§in Ã¶zel raporlar oluÅŸturmak iÃ§in tasarlanmÄ±ÅŸ bir projedir.
 
-![Proje Mimarisi](resim-baglantisi)
 
-## Proje Yapısı
+![mimari](https://github.com/onrkrsy/HotelGuide/assets/11960564/2723fea7-1501-485f-a267-86bf45dd87c7)
 
-Bu proje, 1 Gateway ve 2 mikro hizmetten oluşmaktadır:
+## Proje YapÄ±sÄ±
 
-- **ApiGateway**: Gelen istekleri 7500 numaralı porttan karşılar ve HotelService ve ReportService'e yönlendirir. Eğer "api/CreateReport/{location}" isteği gelirse, bu isteği MassTransit-RabbitMQ aracılığıyla ReportService tarafından dinlenen bir kuyruğa iletir.
+Bu proje, 1 Gateway ve 2 mikro hizmetten oluÅŸmaktadÄ±r:
 
-- **HotelService**: Otellerin ve onlara ait iletişim bilgilerinin tüm CRUD (Create, Read, Update, Delete) işlemlerinin gerçekleştirildiği mikro hizmettir.
+- **ApiGateway**: Gelen istekleri 7500 numaralÄ± porttan karÅŸÄ±lar ve HotelService ve ReportService'e yÃ¶nlendirir. EÄŸer "api/CreateReport/{location}" isteÄŸi gelirse, bu isteÄŸi MassTransit-RabbitMQ aracÄ±lÄ±ÄŸÄ±yla ReportService tarafÄ±ndan dinlenen bir kuyruÄŸa iletir.
 
-- **ReportService**: ReportService, dinlediği kuyruktan bir rapor oluşturma isteği aldığında Reports tablosuna bir kayıt ekler ve durumu "InProgress" olarak işaretler. Ardından asenkron bir şekilde raporu oluşturma işlemini başlatır. HotelService'in "GetReportDatasByLocation/{location}" endpoint'ine HTTP isteği göndererek oluşturulacak rapor bilgilerini alır. Bu bilgileri raporun adıyla birlikte bir ".txt" dosyasına yazar. Son olarak, raporun durumunu "Completed" olarak günceller.
+- **HotelService**: Otellerin ve onlara ait iletiÅŸim bilgilerinin tÃ¼m CRUD (Create, Read, Update, Delete) iÅŸlemlerinin gerÃ§ekleÅŸtirildiÄŸi mikro hizmettir.
+
+- **ReportService**: ReportService, dinlediÄŸi kuyruktan bir rapor oluÅŸturma isteÄŸi aldÄ±ÄŸÄ±nda Reports tablosuna bir kayÄ±t ekler ve durumu "InProgress" olarak iÅŸaretler. ArdÄ±ndan asenkron bir ÅŸekilde raporu oluÅŸturma iÅŸlemini baÅŸlatÄ±r. HotelService'in "GetReportDatasByLocation/{location}" endpoint'ine HTTP isteÄŸi gÃ¶ndererek oluÅŸturulacak rapor bilgilerini alÄ±r. Bu bilgileri raporun adÄ±yla birlikte bir ".txt" dosyasÄ±na yazar. Son olarak, raporun durumunu "Completed" olarak gÃ¼nceller.
+
+### Ã–rnek Ä°stek
+![pmcol](https://github.com/onrkrsy/HotelGuide/assets/11960564/16cc407a-b278-4f53-853e-b0c0568d6752)
+
 
 ## Kurulum
 
-- Message-Queueing için **RabbitMQ** ve veritabanı için **PostgreSQL** kurulumu gereklidir.
-- **HotelService.Api** ve **ReportService.Api** projelerinin `appsettings.json` dosyalarında bağlantı dizesi (ConnectionString) ayarlarının yapılması gerekir.
-- **ApiGateway** projesinin `appsettings.json` dosyasında RabbitMQ ayarlarının yapılması gereklidir.
+- Message-Queueing iÃ§in **RabbitMQ** ve veritabanÄ± iÃ§in **PostgreSQL** kurulumu gereklidir.
+- **HotelService.Api** ve **ReportService.Api** projelerinin `appsettings.json` dosyalarÄ±nda baÄŸlantÄ± dizesi (ConnectionString) ayarlarÄ±nÄ±n yapÄ±lmasÄ± gerekir.
+- **ApiGateway** projesinin `appsettings.json` dosyasÄ±nda RabbitMQ ayarlarÄ±nÄ±n yapÄ±lmasÄ± gereklidir.
 
 ## Eksikler
 
-- Middleware'ler ile loglama ve hata yönetimi (exception handling) mekanizması henüz kurulmamıştır. Bu nedenle ElasticSearch kullanılmamıştır.
-- Servis metodlarının yanıtlarının SuccessResponse, ErrorResponse gibi ortak cevaplara dönüştürülmesi gerekmektedir.
-- Testler henüz yazılmamıştır.
-- Uygulamalar Dockerize edilmemiştir.
+- Middleware'ler ile loglama ve hata yÃ¶netimi (exception handling) mekanizmasÄ± henÃ¼z kurulmamÄ±ÅŸtÄ±r. Bu nedenle ElasticSearch kullanÄ±lmamÄ±ÅŸtÄ±r.
+- Servis metodlarÄ±nÄ±n yanÄ±tlarÄ±nÄ±n SuccessResponse, ErrorResponse gibi ortak cevaplara dÃ¶nÃ¼ÅŸtÃ¼rÃ¼lmesi gerekmektedir.
+- Testler henÃ¼z yazÄ±lmamÄ±ÅŸtÄ±r.
+- Uygulamalar Dockerize edilmemiÅŸtir.
 
-Bu projeyi geliştirmeye devam etmek ve eksiklikleri gidermek istiyorsanız, aşağıdaki düzenlemeleri yapabilirsiniz.
+Bu projeyi geliÅŸtirmeye devam etmek ve eksiklikleri gidermek istiyorsanÄ±z, aÅŸaÄŸÄ±daki dÃ¼zenlemeleri yapabilirsiniz.
