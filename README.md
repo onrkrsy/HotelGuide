@@ -7,11 +7,11 @@ HotelGuide, oteller ve onlara ait iletişim bilgilerini kaydetmek ve belirli kon
 
 ## Proje Yapısı
 
-Bu proje, 1 Gateway ve 2 mikro hizmetten oluşmaktadır:
+Bu proje, 1 Gateway ve 2 mikroservisten oluşmaktadır:
 
 - **ApiGateway**: Gelen istekleri 7500 numaralı porttan karşılar ve HotelService ve ReportService'e yönlendirir. Eğer "api/CreateReport/{location}" isteği gelirse, bu isteği MassTransit-RabbitMQ aracılığıyla ReportService tarafından dinlenen bir kuyruğa iletir.
 
-- **HotelService**: Otellerin ve onlara ait iletişim bilgilerinin tüm CRUD (Create, Read, Update, Delete) işlemlerinin gerçekleştirildiği mikro hizmettir.
+- **HotelService**: Otellerin ve onlara ait iletişim bilgilerinin tüm CRUD (Create, Read, Update, Delete) işlemlerinin gerçekleştirildiği mikroservistir.
 
 - **ReportService**: ReportService, dinlediği kuyruktan bir rapor oluşturma isteği aldığında Reports tablosuna bir kayıt ekler ve durumu "InProgress" olarak işaretler. Ardından asenkron bir şekilde raporu oluşturma işlemini başlatır. HotelService'in "GetReportDatasByLocation/{location}" endpoint'ine HTTP isteği göndererek oluşturulacak rapor bilgilerini alır. Bu bilgileri raporun adıyla birlikte bir ".txt" dosyasına yazar. Son olarak, raporun durumunu "Completed" olarak günceller.
 
