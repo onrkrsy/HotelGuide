@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HotelService.Infrastructure.Migrations
 {
     [DbContext(typeof(HotelGuideDbContext))]
-    [Migration("20231028193923_InitDatabase")]
+    [Migration("20231031224345_InitDatabase")]
     partial class InitDatabase
     {
         /// <inheritdoc />
@@ -63,6 +63,10 @@ namespace HotelService.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("HotelName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Location")
                         .IsRequired()
                         .HasColumnType("text");
 

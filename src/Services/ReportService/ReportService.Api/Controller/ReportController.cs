@@ -15,11 +15,11 @@ namespace ReportService.Api.Controller
             _reportService = reportRepository;
         }
         [HttpGet]
-        public IActionResult ListContactInfos()
+        [HttpGet("GetAllReports")]
+        public async Task <IActionResult> GetAllReports()
         {
-            var ContactInfos = _reportService.GetAll();
-            return Ok(ContactInfos);
-        }
-
+            var reports = await _reportService.GetAll();
+            return Ok(reports);
+        } 
     }
 }

@@ -37,36 +37,22 @@ namespace ServiceCore.Repositories
 
         public virtual async Task<TEntity> Update(TEntity entity)
         {
-            try
-            {
-                _dbContext.Set<TEntity>().Update(entity);
-            }
-            catch (Exception ext)
-            {
-
-                throw;
-            }
-          
+             
+            _dbContext.Set<TEntity>().Update(entity); 
             await _dbContext.SaveChangesAsync();
             return entity;
         }
 
-        public virtual async Task<TEntity> Delete(Guid id)
-        {
-            TEntity entity = null;
-            try
+        public virtual async Task<bool> Delete(Guid id)
+        { 
+            TEntity entity = await _dbContext.Set<TEntity>().FindAsync(id);
+            if (entity != null)
             {
-                entity = await _dbContext.Set<TEntity>().FindAsync(id);
                 _dbContext.Set<TEntity>().Remove(entity);
                 await _dbContext.SaveChangesAsync();
-                return entity;
+                return true;  // İşlem başarılıysa true döner.
             }
-            catch (Exception ex)
-            {
-                var result = ex.Message;
-            }
-
-            return entity;
+            return false;  
         }
 
         public virtual IQueryable<TEntity> GetQuery()

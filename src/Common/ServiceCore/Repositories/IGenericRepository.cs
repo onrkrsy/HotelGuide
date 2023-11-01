@@ -13,7 +13,7 @@ namespace ServiceCore.Repositories
         Task<T> Get(Guid id);
         Task<T> Create(T entity);
         Task<T> Update(T entity);
-        Task<T> Delete(Guid id);
+        Task<bool> Delete(Guid id);
         IQueryable<T> GetQuery();
         IQueryable<T> GetQuery(string includeProperties);
         IQueryable<T> GetQuery(Expression<Func<T, bool>> filter);

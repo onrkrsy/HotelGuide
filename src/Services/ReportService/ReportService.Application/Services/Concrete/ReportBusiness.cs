@@ -55,7 +55,7 @@ namespace ReportService.Application.Services.Concrete
         public async Task<List<Report>> GetAll()
         {
             var result = await _repository.GetAll();
-            return _mapper.Map<List<Report>, List<Report>>(result);
+            return  result;
         }
 
         public Task<Report> Add(string data)

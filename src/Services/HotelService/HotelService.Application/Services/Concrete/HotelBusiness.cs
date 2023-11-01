@@ -18,10 +18,8 @@ namespace HotelService.Application.Services.Concrete
     public class HotelBusiness : IHotelsBusiness
     {
         IHotelRepository _repository;
-        private readonly IMapper _mapper;
-        public HotelBusiness(IHotelRepository repository, IMapper mapper) 
-        {
-            _mapper = mapper;
+        public HotelBusiness(IHotelRepository repository) 
+        {          
             _repository = repository;
         } 
         public  async Task<Hotel> Add(CreateHotelDto model)
@@ -46,9 +44,9 @@ namespace HotelService.Application.Services.Concrete
             return await _repository.Get(id);
         }
 
-        public async Task Delete(Guid id)
+        public async Task<bool> Delete(Guid id)
         {
-           await _repository.Delete(id);
+           return await _repository.Delete(id);
         }
 
         public Task<List<StatisticsHotelDto>> GetReportDatasByLocation(string location)

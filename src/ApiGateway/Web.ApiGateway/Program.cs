@@ -1,7 +1,5 @@
-using Microsoft.Extensions.Configuration;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
-using Ocelot.Values;
 using ServiceCore.Extensions;
 using Web.ApiGateway.Handlers;
 
@@ -34,13 +32,11 @@ app.Run();
 public static class CustomExtensionMethods
 {
     public static IEndpointConventionBuilder MapReport(this IEndpointRouteBuilder endpoints, string pattern)
-    {
-
+    { 
+        //CreateReport isteðinde çalýþtýrýlacak Middleware
         var pipeline = endpoints.CreateApplicationBuilder()
-            .UseMiddleware<ReportsMiddleware>() 
-
-            .Build();
-
+            .UseMiddleware<ReportsMiddleware>()  
+            .Build(); 
         return endpoints.Map(pattern, pipeline);
     }
 

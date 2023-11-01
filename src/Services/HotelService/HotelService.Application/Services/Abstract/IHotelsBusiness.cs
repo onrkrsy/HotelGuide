@@ -16,7 +16,7 @@ namespace HotelService.Application.Services.Abstract
         Task<Hotel> Update(UpdateHotelDto model);
         Task<List<Hotel>> GetAll();
         Task<Hotel>Get(Guid id);
-        Task Delete(Guid id);
+        Task<bool> Delete(Guid id);
         Task<List<StatisticsHotelDto>> GetReportDatasByLocation(string location);
 
 

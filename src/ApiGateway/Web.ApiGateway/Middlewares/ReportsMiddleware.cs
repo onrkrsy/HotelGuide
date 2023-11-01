@@ -11,8 +11,7 @@ using static System.Net.Mime.MediaTypeNames;
 namespace Web.ApiGateway.Handlers
 {
     public class ReportsMiddleware
-    {
-        //private readonly IBus _bus;
+    { 
         private readonly ISendEndpoint _bus;
         private readonly RequestDelegate _next;
         public ReportsMiddleware(RequestDelegate next,IConfiguration config)
@@ -25,12 +24,12 @@ namespace Web.ApiGateway.Handlers
 
         public async Task Invoke(HttpContext context, IPublishEndpoint publishEndpoint)
         {
-
+            //CreateReport istediğinin yakalndığı yer
             var _publishEndpoint = publishEndpoint;
             var request = context.Request;
             var body = await new StreamReader(request.Body).ReadToEndAsync();
             await _bus.Send<IReportRequest>(JsonConvert.DeserializeObject<ReportRequest>(body));
-            string responseString = "Rapor oluşturma talebi alınmıştır. ListAllReportStatus enpointinden raporun durumu takip edebilirsiniz.";             
+            string responseString = "Rapor oluşturma talebi alınmıştır. 'GetAllReports' enpointinden raporun durumu takip edebilirsiniz.";             
             context.Response.ContentType = "text/plain"; 
             context.Response.StatusCode = 200; 
             await context.Response.WriteAsync(responseString);

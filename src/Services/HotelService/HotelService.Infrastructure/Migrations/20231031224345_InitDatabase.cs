@@ -18,7 +18,8 @@ namespace HotelService.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     HotelName = table.Column<string>(type: "text", nullable: false),
                     AuthorizedFirstName = table.Column<string>(type: "text", nullable: false),
-                    AuthorizedLastName = table.Column<string>(type: "text", nullable: false)
+                    AuthorizedLastName = table.Column<string>(type: "text", nullable: false),
+                    Location = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
