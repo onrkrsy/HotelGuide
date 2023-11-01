@@ -1,0 +1,43 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/Hotel/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7501
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Hotel/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Put", "Delete", "Post" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/ContactInfo/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7501
+        }
+      ],
+      "UpstreamPathTemplate": "/ContactInfo/{everything}",
+      "UpstreamHttpMethod": [ "Post", "Get", "Put", "Delete" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Report/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7502
+        }
+      ],
+      "UpstreamPathTemplate": "/Report/{everything}",
+      "UpstreamHttpMethod": [ "Post", "Delete", "Get", "Put" ]
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:7500"
+  }
+}

@@ -1,0 +1,3 @@
+Gatway-> http://localhost:7500
+HotelService-> http://localhost:7501
+ReportService-> http://localhost:7502
