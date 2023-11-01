@@ -25,11 +25,9 @@ Bu proje, 1 Gateway ve 2 mikro hizmetten oluşmaktadır:
 - **HotelService.Api** ve **ReportService.Api** projelerinin `appsettings.json` dosyalarında bağlantı dizesi (ConnectionString) ayarlarının yapılması gerekir.
 - **ApiGateway** projesinin `appsettings.json` dosyasında RabbitMQ ayarlarının yapılması gereklidir.
 
-## Eksikler
+## Yapılacaklar
 
 - Middleware'ler ile loglama ve hata yönetimi (exception handling) mekanizması henüz kurulmamıştır. Bu nedenle ElasticSearch kullanılmamıştır.
 - Servis metodlarının yanıtlarının SuccessResponse, ErrorResponse gibi ortak cevaplara dönüştürülmesi gerekmektedir.
 - Testler henüz yazılmamıştır.
 - Uygulamalar Dockerize edilmemiştir.
-
-Bu projeyi geliştirmeye devam etmek ve eksiklikleri gidermek istiyorsanız, aşağıdaki düzenlemeleri yapabilirsiniz.
