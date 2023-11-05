@@ -12,6 +12,8 @@
     <Folder Include="Repositories\EntityFramework\" />
 	  <PackageReference Include="MassTransit" Version="8.0.10-develop.696" />
 	  <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.10-develop.696" />
+	  <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+	  <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.13" />
   </ItemGroup>
 

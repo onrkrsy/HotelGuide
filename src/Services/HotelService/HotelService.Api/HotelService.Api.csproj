@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\ServiceCore\ServiceCore.csproj" />
     <ProjectReference Include="..\HotelService.Application\HotelService.Application.csproj" />
     <ProjectReference Include="..\HotelService.Domain\HotelService.Domain.csproj" />
     <ProjectReference Include="..\HotelService.Infrastructure\HotelService.Infrastructure.csproj" />

@@ -4,6 +4,7 @@ using HotelService.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ServiceCore.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -27,7 +28,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.ConfigureCustomExceptionMiddleware();
 app.UseAuthorization();
 
 app.MapControllers();
