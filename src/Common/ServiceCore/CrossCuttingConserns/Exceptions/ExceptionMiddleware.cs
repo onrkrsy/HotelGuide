@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using ServiceCore.ElasticSearch;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -15,10 +16,11 @@ namespace ServiceCore.CrossCuttingConserns.Exceptions
     public class ExceptionMiddleware
     {
         private readonly RequestDelegate _next;
-
-        public ExceptionMiddleware(RequestDelegate next)
+        private readonly ILogger<ExceptionMiddleware> _logger; 
+        public ExceptionMiddleware(RequestDelegate next,   ILogger<ExceptionMiddleware> logger)
         {
-            _next = next;
+            _next = next; 
+            _logger = logger;
         }
         public async Task Invoke(HttpContext context)
         {
@@ -48,6 +50,7 @@ namespace ServiceCore.CrossCuttingConserns.Exceptions
                 Detail = exception.Message,
                 Instance = ""
             });
+            _logger.LogError(exception,"General Error");
             return context.Response.WriteAsync(jsonResponse);
         }
     }
